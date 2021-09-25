@@ -111,6 +111,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: CircularProgressIndicator(),
                       );
                   }
+                  // Closer that 50m, with accuracy taken into account
+                  double distanceAway = Geolocator.distanceBetween(positionSnapshot.data!.latitude, positionSnapshot.data!.longitude, 69.7520006, 20.9234172);
+                  double accuracy = positionSnapshot.data!.accuracy;
+                  if ((distanceAway - accuracy) < 50.0){
+                    return Center(
+                      child: Image.network('https://picsum.photos/250'),
+                    );
+                  }
+                  // more that 50m away
                   return Text("""Lat ${positionSnapshot.data!.latitude.toString()}
                   Long ${positionSnapshot.data!.longitude.toString()}
                   Height ${positionSnapshot.data!.altitude.toString()}
